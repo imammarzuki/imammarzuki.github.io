@@ -1,1 +1,28 @@
-
+<!doctype html>
+<html>
+<head>
+<title>Halaman Login</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript">
+  function masuk() {
+  var username = document.login.username.value;
+  var password = document.login.password.value;
+  if (username == "123" && password == "123") {
+      alert("Anda berhasil login!");
+  }
+  else {
+      alert("Maaf, username atau password yang Anda masukkan salah.");
+  }
+}
+</script>
+</head>
+<form action="menu.html" method="get">
+<p>Welcome</p>
+    Username  <input type="text" name="username" placeholder="username">
+    Password  <input type="password" name="password" placeholder="password">
+    <input class="login" type="submit" name="submit" value="login">
+  </form>
+<input type="submit" name="submit" value="Login"> 
+</form>
+</body>
+</html>
