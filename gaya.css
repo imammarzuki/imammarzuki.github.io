@@ -1,6 +1,6 @@
 a:hover{background-color: red;}
 tr:hover{background-color: yellow;}
-@media (max-width: 600px){
+@media (max-width: 800px){
 	.responsive{overflow: auto;}
 	td{font-size:20px}
 }
