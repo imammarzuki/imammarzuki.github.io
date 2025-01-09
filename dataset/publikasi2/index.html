@@ -4,21 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dataset Publikasi 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow-x: auto;
+            display: block;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        @media screen and (max-width: 768px) {
+            th, td {
+                font-size: 0.9em;
+                padding: 6px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div align="center">
-    <h1>Dataset Publikasi 2</h1>
-    <b>sumber : <a href="https://imammarzuki.online/ambildata" target="_blank">imammarzuki.online/ambildata</a></b><br><br>
-    <table border="1" cellspacing="0" cellpadding="10" id="excelTable">
-        <!-- Data Excel akan ditampilkan di sini -->
-    </table>
+    <div class="container">
+        <h1>Dataset Publikasi 2</h1>
+        <b>sumber: <a href="https://imammarzuki.online/ambildata" target="_blank">imammarzuki.online/ambildata</a></b><br><br>
+        <table id="excelTable">
+            <!-- Data Excel akan ditampilkan di sini -->
+        </table>
+    </div>
 
     <!-- Tambahkan pustaka SheetJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-        // Fungsi untuk memuat file Excel secara otomatis
         document.addEventListener('DOMContentLoaded', function() {
-            // URL file Excel lokal (ganti dengan path file Anda)
             const excelURL = './Databatu.xlsx';
 
             fetch(excelURL)
@@ -26,18 +65,14 @@
                 .then(data => {
                     const workbook = XLSX.read(data, { type: 'array' });
 
-                    // Ambil sheet pertama
                     const sheetName = workbook.SheetNames[0];
                     const sheet = workbook.Sheets[sheetName];
 
-                    // Konversi sheet ke JSON
                     const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-                    // Render data ke tabel HTML
                     const table = document.getElementById('excelTable');
-                    table.innerHTML = ""; // Kosongkan tabel sebelumnya
+                    table.innerHTML = ""; 
                     
-                    // Tambahkan header
                     if (sheetData.length > 0) {
                         const headerRow = document.createElement('tr');
                         sheetData[0].forEach(header => {
@@ -48,12 +83,10 @@
                         table.appendChild(headerRow);
                     }
 
-                    // Tambahkan data
                     sheetData.slice(1).forEach(row => {
                         const tr = document.createElement('tr');
                         row.forEach(cell => {
                             const td = document.createElement('td');
-                            // Tampilkan angka 0, bukan hanya nilai truthy
                             td.textContent = cell !== undefined ? cell : ""; 
                             tr.appendChild(td);
                         });
@@ -65,6 +98,5 @@
                 });
         });
     </script>
-    </div>
 </body>
 </html>
