@@ -1,6 +1,102 @@
-<html>
-  <body>
-    Download Dataset 
-    <a href="dataset.xlsx">Excel</a>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Publikasi 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow-x: auto;
+            display: block;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        @media screen and (max-width: 768px) {
+            th, td {
+                font-size: 0.9em;
+                padding: 6px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dataset Publikasi 4</h1>
+        <b>sumber: Youtube</b><br><br>
+        <table id="excelTable">
+            <!-- Data Excel akan ditampilkan di sini -->
+        </table>
+    </div>
+
+    <!-- Tambahkan pustaka SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const excelURL = './dataset.xlsx';
+
+            fetch(excelURL)
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+
+                    const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                    const table = document.getElementById('excelTable');
+                    table.innerHTML = ""; 
+                    
+                    if (sheetData.length > 0) {
+                        const headerRow = document.createElement('tr');
+                        sheetData[0].forEach(header => {
+                            const th = document.createElement('th');
+                            th.textContent = header || "";
+                            headerRow.appendChild(th);
+                        });
+                        table.appendChild(headerRow);
+                    }
+
+                    sheetData.slice(1).forEach(row => {
+                        const tr = document.createElement('tr');
+                        row.forEach(cell => {
+                            const td = document.createElement('td');
+                            td.textContent = cell !== undefined ? cell : ""; 
+                            tr.appendChild(td);
+                        });
+                        table.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error("Gagal membaca file Excel:", error);
+                });
+        });
+    </script>
+</body>
 </html>
